@@ -33,7 +33,6 @@
 
 - 현재 서버에 어떤 DB가 있는지 보기
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e9028635-61fa-4fc4-b9b1-ba60a15ac658/Untitled.png)
 
 ---
 
@@ -42,12 +41,10 @@
 - 사용할 데이터베이스 지정
 - 지정해 놓은 후 특별히 다시 USE문 사용하거나 다른 DB를 사용하겠다고 명시하지 않는 이상 모든 SQL문은 지정 DB에서 수행
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8fb197fe-0e96-4b21-b99c-98cd084d14a4/Untitled.png)
 
 - Workbench에서 직접 선택해 사용 가능
     - [Navigator]→[SCHEMAS]→데이터베이스 선택
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/58a5a07e-8ce9-48fe-8137-6a019abc2c21/Untitled.png)
 
 ---
 
@@ -55,7 +52,6 @@
 
 - 데이터베이스 world의 테이블 이름 보기
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/90d3e2ba-83b6-49a9-b83c-b33f12091bb8/Untitled.png)
 
 ---
 
@@ -63,7 +59,6 @@
 
 - 데이터베이스 wrold의 테이블 정보 조회
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7782b541-b2d2-490e-8503-ae5b0ef05e04/Untitled.png)
 
 ---
 
@@ -72,11 +67,9 @@
 - city 테이블에 무슨 열이 있는지 확인
     - DESCRIBE city;
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c01e8f8a-1ff2-4614-9d06-25f14431d687/Untitled.png)
     
     - DESC city
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ba4d5851-4bbc-41da-9d3c-5d5a9d3e93a3/Untitled.png)
 
 ---
 
