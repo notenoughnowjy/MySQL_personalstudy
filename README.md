@@ -1,5 +1,8 @@
 # MySQL
 
+Youtube Link : https://youtu.be/vgIc4ctNFbc
+
+
 - DML(Data Manipulation Language)
     - 데이터 조작 언어
     - 데이터를 조작(선택,삽입,수정,삭제)하는 데 사용되는 언어
