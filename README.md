@@ -214,3 +214,226 @@ from city
 where countrycode = ( SELECT countrycode from city where name = 'seoul');
 // country코드는 모르는데 seoul이 있는 나라의 도시들을 출력하고 싶을때 사용
 ```
+
+### ANY
+
+- 서브쿼리의 여러 개의 결과 중 한 가지만 만족해도 가능
+- SOME은 ANY와 동일한 의미로 사용
+- =ANY 구문은 IN과 동일한 의미
+
+```sql
+select *
+from city
+where population > Any (	SELECT population 
+							from city 
+                            where District = 'new york');
+// ANY의 결과 중 만족하는 것들을 모두 출력해낸다.
+```
+
+```sql
+select *
+from city
+where population > SOME (	SELECT population 
+							from city 
+                            where District = 'new york');
+// ANY의 결과 중 만족하는 것들을 모두 출력해낸다.
+```
+
+### ALL
+
+- 서브쿼리의 여러개의 결과를 모두 만족 시켜야 함
+
+```sql
+select *
+from city
+where population > ALL (	SELECT population 
+							from city 
+                            where District = 'new york');
+// ANY의 결과 중 만족하는 것들을 모두 출력해낸다.
+```
+
+### ORDER BY
+
+- 결과가 출력되는 순서를 조절하는 구문
+- 기본적으로 오름차순(ASCENDING) 정렬 [줄임 ASC]
+- 내림차순(DESCENDING)으로 정렬
+    - 열 이름 뒤에 DESC 적어줄 것
+- DESC(내림차순)은 default 이므로 생략 가능
+
+```sql
+select *
+from city
+order by population DESC
+```
+
+```sql
+select *
+from city
+order by population ASC
+```
+
+- ORDER BY 구문을 혼합해 사용하는 구문도 가능
+
+```sql
+select *
+from city
+order by countrycode asc, population desc
+
+//countrycode는 오름차순, pupulation은 내림차순으로 혼합 사
+```
+
+### 인구수로 내림차순하여 한국에 있는 도시 보기
+
+```sql
+select *
+from city
+where countrycode = 'kor'
+order  by population desc;
+```
+
+### 국가 면적 크기로 내림차순하여 나라 보기(country table)
+
+```sql
+select *
+from country
+order by surfacearea desc;
+```
+
+### DISTINCT(분명한)
+
+- 중복된 것은 1개씩만 보여주면서 출력
+- 테이블의 크기가 클수록 효율적
+
+```sql
+select distinct countrycode
+from city;
+```
+
+### LIMIT
+
+- 출력 개수를 제한
+- 상위은 N개만 출력하는 ‘LIMIT N’구문
+- 서버의 처리량을 많이 사용해 서버의 전반적인 성능을 나쁘게 하는 악성 쿼리문을 개선할 때 사용
+
+```sql
+select *
+from city
+order by population desc
+LIMIT 10
+```
+
+### Group By
+
+- 그룹으로 묶어주는 역할
+- 집계 함수(Aggregate Function)를 함께 사용
+    - AVG() : 평균
+    - MIN() : 최소값
+    - MAX() : 최대값
+    - COUNT : 행의 개수
+    - COUNT(DISTINCT) : 중복 제외된 행의 개수
+    - STDEV() : 표준 편차
+    - VARIANCE() : 분산
+- 효율적인 데이터 그룹화(Grouping)
+- 읽기 좋게 하기 위해 별칭(Alias) 사용
+
+```sql
+select countrycode, max(population)
+from city
+group by CountryCode;
+//country코드를 묶고 population(인구 수)가 가장 많은 사람들
+//위주로 묶어 달라
+```
+
+```sql
+select countrycode, min(population)
+from city
+group by CountryCode;
+```
+
+```sql
+select countrycode, avg(population)
+from city
+group by CountryCode;
+```
+
+- as ‘______’를 쓰면 colum명을 바꿀 수 있음
+    - as ‘maximum’
+    - as ‘minumum’
+    - as ‘averge’
+
+### 도시는 몇개인가?
+
+```sql
+select count(*)
+from city;
+```
+
+### 도시들의 평균 인구수는?
+
+```sql
+select avg(population)
+from city;
+```
+
+### HAVING
+
+- WHERE과 비슷한 개념으로 조건 제한
+- 집계 함수에 대해서 조건 제한하는 편리한 개념
+- HAVING절은 반드시 GROUP BY절 다음 에 나와야 함
+
+```sql
+select countrycode, max(population)
+from city
+group by countrycode
+having max(Population) > 8000000;
+```
+
+### ROLLUP
+
+- 총합 또는 중간합계가 필요할 경우 사용
+- GROUP BY 절과 함께 WITH ROLLUP문 사용
+
+```sql
+select countrycode, name, sum(population) as 'sum'
+from city
+group by countrycode, name with rollup;
+
+//countrycode, name, sum(population)을 보여주고
+// city에서 값을 불러온다.
+// countrycode로 그룹을 묶어주고, countrycode의 중간 합계 후
+// 합을 보여준다.
+```
+
+### JOIN
+
+[JOIN](https://www.notion.so/JOIN-375e3a5e697145e19b58ae116f8a83cd)
+
+- JOIN은 데이터베이스 내의 여러 테이블에서 가져온 레코드를 조합하여 하나의 테이블이나 결과 집합으로 표현
+
+```sql
+select *
+from city
+join country on city.CountryCode = country.Code;
+```
+
+### city, country, countrylanguage 테이블 3개를 JOIN 하기
+
+```sql
+select *
+FROM city
+JOIN country on city.CountryCode = country.Code
+JOIN countrylanguage on city.CountryCode = countrylanguage.CountryCode;
+```
+
+```sql
+select *
+from city;
+
+select *
+from country;
+
+select *
+from countrylanguage;
+
+//세개의 테이블을 각각 실행해보면서 겹치는 나라의 코드를 이용해서 테이블 합치기
+```
