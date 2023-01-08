@@ -437,3 +437,139 @@ from countrylanguage;
 
 //세개의 테이블을 각각 실행해보면서 겹치는 나라의 코드를 이용해서 테이블 합치기
 ```
+
+## MySQL 내장함수
+
+- 사용자가 편의를 위해 다양한 기능의 내장 함수를 미리 정의하여 제공
+- 대표적인 내장 함수의 종류
+    - 문자열 함수
+    - 수학 함수
+    - 날짜와 시간 함수
+    
+
+### LENGTH()
+
+- 전달받은 문자열의 길이를 반환
+
+```sql
+select length('asdasdwq')
+```
+
+### CONCAT()
+
+- 전달받은 문자열을 모두 결합하여 하나의 문자열로 반환
+- 전달받은 문자열 중 하나라도 NULL이 존재하면 NULL을 반환
+
+```sql
+select concat('my', 'sql op', 'en source')
+=> mysql open source
+```
+
+```sql
+concat('mysql','null','open source')
+=> null  
+```
+
+### LOCATE()
+
+- 문자열 내에서 찾는 문자열이 처음으로 나타나는 위치를 찾아서 해당 위치를 반환
+- 찾는 문자열이 문자열 내에 존재하지 않으면 0을 반환
+- MySQL에서는 문자열의 시작 인덱스를 1부터 계산
+
+```sql
+select locate('abc', 'ababababaabacabc'),
+locate('abc', 'abababaabafacacabacabacabcbabc');
+
+-> mysql은 인덱스번호를 1부터 매긴다.
+```
+
+### LEFT(), RIGHT()
+
+- LEFT() : 문자열의 왼쪽부터 지정한 개수만큼의 문자를 반환
+- RIGHT() : 문자열의 오른쪽부터 지정한 개수만큼의 문자를 반환
+
+```sql
+select
+LEFT('MySQL is an open source relational database management system', 5)
+RIGHT('MySQL is an open source relational database mangement system', 6)
+
+left => MySQL
+RIGHT => system
+```
+
+### LOWER(), UPPER()
+
+- LOWER() : 문자열의 문자를 모두 소문자로 변경
+- UPPER() : 문자열의 문자를 모두 대문자로 변경
+
+```sql
+select 
+LOWER('MySQL is an open source relational database management system'),
+UPPER('MySQL is an open source relational database mangement system);
+```
+
+### REPLACE()
+
+- 문자열에서 특정 문자열을 대체 문자열로 교체
+
+```sql
+select replace('MSSQL', 'MS', 'MY');
+
+=> MYSQL
+```
+
+### TRIM()
+
+- 문자열의 앞이나 뒤, 또는 양쪽 모두에 있는 특정 문자를 제거
+- TRIM() 함수에서 사용할 수 있는 지정자
+    - BOTH : 전달받은 문자열의 양 끝에 존재하는 특정 문자를 제거 (기본 설정)
+    - LEADING : 전달받은 문자열 앞에 존재하는 특정 문자를 제거
+    - TRAILING : 전달받은 문자열 뒤에 존재하는 특정 문자를 제거
+- 만약 지정자를 명시하지 않으면, 자동으로 BOTH로 설정
+- 제거할 문자를 명시하지 않으면, 자동으로 공백을 제거
+
+```sql
+select TRIM('	##MYSQL##	'), //공백을 없애준다.
+TRIM(LEADING '#' FROM '##MYSQL##'), //문자열 앞의 #을 없애준다.
+TRIM(TRAILING '#' FROM '##MYSQL##'); //문자열 뒤의 #을 없애준다.
+
+TRIM both => ##MYSQL##
+TRIM leading => MYSQL##
+TRIM trailing => ##MYSQL
+```
+
+### FLOOR(), CELI(), ROUNT()
+
+- FLOOR() : 내림
+- CEIL() : 올림
+- ROUND() : 반올림
+
+```sql
+SELECT FLOOR(10.95),
+FLOOR(11.01),
+FLOOR(-10.95),
+FLOOR(-11.01),
+CEIL(10.95),
+CEIL(11.01),
+CEIL(11),
+CEIL(-10.95),
+CEIL(-11.01),
+ROUND(10.49),
+ROUND(10.5),
+ROUND(-10.5),
+ROUND(-10.49);
+```
+
+### FROMAT()
+
+- 숫자 타입의 데이터를 세 자리마다 쉼표(,)를 사용하는 ‘#,###,###.##’형식으로 변환
+- 반환되는 데이터의 형식은 문자열 타입
+- 두 번째 인수는 반올림할 소수 부분의 자릿수
+
+```sql
+select from('123123123123.123123,5);
+=> 123,123,123,123.12312
+
+select from('12345123123123.12312,4);
+=> 12,345,123,123,123.1231
+```
