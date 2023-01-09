@@ -673,3 +673,98 @@ date_format(now(), '%D %y %a %d %m %n %j')
 ### CREATE TABLE AS SELECT
 
 - city테이블과 똑같은 city2테이블 생성
+
+```sql
+create table city2 as select * from city;
+
+select * from city2;
+```
+
+### CREATE DATABASE
+
+- CREATE DATABASE 문은 새로운 데이터베이스를 생성
+- USE문으로 새 데이터베이스를 사용
+
+```sql
+create database joonyeong;
+
+use joonyeoung;
+```
+
+### CREATE TABLE(MySQL Workbench)
+
+- 데이터 타입 : https://dev.mysql.com/doc/refman/8.0/en/data-types.html
+
+```sql
+select * from test;
+```
+
+### CREATE TABLE
+
+```sql
+CREATE TABLE test2(
+	id INT NOT NULL PRIMARY KEY, //기본적으로 테이블이 PRIMARY라는 인덱스를 가지게 된다
+	col1 INT NULL,
+	col2 FLOAT NULL,
+	col3 VARCHAR(45) NULL
+);
+
+SELECT * FROM test2;
+```
+
+### ALTER TABLE
+
+- ALTER TABLE문과 함께 ADD 문을 사용하면, 테이블에 컬럼을 추가할 수 있음
+
+```sql
+ALTER TABLE test2
+add col4 INT NULL;
+
+select * from test2;
+
+desc test2;
+
+alter table test2
+modify col4 varchar(20) NULL;
+
+alter table test2
+drop col4;
+```
+
+- ALTER TABLE 문과 함께 MODIFY 문을 사용하면, 테이블의 컬럼 타입을 변경할 수 있음
+
+## 인덱스(INDEX)
+
+- 테이블에서 원하는 데이터를 빠르게 찾기 위해 사용
+- 일반적으로 데이터를 검색할 때 순서대로 테이블 전체를 검색하므로 데이터가 많으면 많을수록 탐색하는 시간이 늘어남
+- 검색과 질의를 할 때 테이블 전체를 읽지 않기 때문에 빠름
+- 설정된 컬럼 값을 포함한 데이터의 삽입, 삭제, 수정 작업이 원본 테이블에서 이루어질 경우, 인덱스도 함께 수정되어야 함
+- 인덱스가 있는 테이블은 처리 속도가 느려질 수 있으므로 수정보다는 검색이 자주 사용되는 테이블에서 사용하는 것이 좋음
+
+### CREATEINDEX
+
+- CREATEINDEX 문을 사용하여 인덱스를 생성
+
+```sql
+CREATE INDEX Col1Idx
+on test (col1)
+```
+
+### SHOW INDEX
+
+- 인덱스 정보 보기
+
+```sql
+SHOW INDEX FROM test;
+```
+
+### CREATE UNIQUE INDEX
+
+- 중복 값을 허용하지 않는 인덱스
+
+```sql
+CREATE UNIQUE INDEX Col2Idx
+on test (col2);
+
+show index from test;
+```
