@@ -573,3 +573,103 @@ select from('123123123123.123123,5);
 select from('12345123123123.12312,4);
 => 12,345,123,123,123.1231
 ```
+
+
+### SQRT(), POW(), EXP(), LOG()
+
+- SQRT() : 양의 제곱근
+- pow() : 첫 번째 인수로는 밑수를 전달하고, 두 번째 인수로는 지수를 전달하여 거듭제곱 계산
+- EXP() : 인수로 지수를 전달받아, e의 거듭제곱을 계산
+- LOG() : 자연로그 값을 계산
+
+```sql
+select sqrt(4), pow(2,3), exp(3), log(3);
+```
+
+### SIN(), COS(), TAN()
+
+- SIN() : 사인값 반환
+- COS() : 코사인값 반환
+- TAN() : 탄젠트값 반환
+
+```sql
+select sin(PI()/2),
+cos(PI()),
+TAN(PI()/4);
+```
+
+### ABS(), RAND()
+
+- ABS(X) : 절대값을 반환
+- RAND() : 0.0보다 크거나 같고 1.0보다 적은 하나의 실수를 무작위로 생성
+
+```sql
+select abs(-3), rand(), round(rand()*100,0);
+```
+
+### NOW(), CURDATE(), CURTIMA()
+
+- NOW() : 현재 날짜와 시간을 반환, 반환되는 값을 ‘YYYY-MM-DD HH:MM:SS’또는 YYYYMMDDHHMMSS형태로 반환
+- CYRDATE() :현재 날짜를 반환, 이때 반환 되는 값을 ’YYYY-MM-DD’또는 YYYYMMDD형태로 반환
+- CURTIME() :환현재 시작을 반환, 이때 반환되는 값을 ‘HH:MM:SS’또는 HHMMSS형태로 반환
+
+```sql
+select now(),
+curdate(),
+curtime();
+```
+
+### DATE(), MONTH(), DAY(), HOUR(), MINUTE(), SECOND()
+
+- DATE() : 전달받은 값에 해당하는 날짜 정보를 반환
+- MONTH() : 월에 대당하는 값을 반환하며, 0부터 12사이의 값을 가짐
+- DAY() : 일에 해당하는 값을 반환하며, 0부터 31사이의 값을 가짐
+- HOUR() : 시간에 해당하는 값을 반환하며, 0부터 23사이의 값을 가짐
+- MINUTE() : 분에 해당하는 값을 반환하며, 0부터 59사이의 값을 가짐
+- SECOND() : 초에 해당하는 값을 반환하며, 0부터 59사이의 값을 가짐
+
+```sql
+select now(), date(now()), month(now()), day(now()), hour(now()), 
+minute(now()), second(now());
+```
+
+### MONTHNAME(), DAYNAME()
+
+- MONTHNAME() :  월에 해당하는 이름을 반환
+- DAYNAME() : 요일에 해당하는 이름을 반환
+
+```sql
+select
+now(),
+monthname(now()),
+dayname(now());
+```
+
+### DAYOFWEEK(), DAYOFMONTH(), DAYOFYEAR()
+
+- DAYOFWEEK() : 일자가 해당 주에서 몇 번째 날인지를 반환, 1부터 7사이의 값을 반환(일요일 = 1, 토요일 = 7)
+- DAYOFMONTH() : 일자가 해당 월에서 몇 번째 날인지를 반환, 9부터 31사이의 값을 반환
+- DAYOFYEAR() : 일자가 해당 연도에서 몇 번째 날인지를 반환, 1부터 366사이의 값을 반환
+
+```sql
+select
+dayofmonth(now()),
+dayofweek(now()),
+dayofyear(now());
+```
+
+### DAY_FORMAT
+
+- 전달받은 형식에 맞춰 날짜와 시간 정보를 문자열로 반환
+- MySQL Date and TIME Function: https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html
+
+```sql
+select
+date_format(now(), '%D %y %a %d %m %n %j')
+```
+
+# SQL 고급
+
+### CREATE TABLE AS SELECT
+
+- city테이블과 똑같은 city2테이블 생성
