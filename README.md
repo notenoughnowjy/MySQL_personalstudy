@@ -768,3 +768,111 @@ on test (col2);
 
 show index from test;
 ```
+
+### FULLTEXTINDEX
+
+- FULLTEXTINDEX는 일반적인 인덱스와는 달리 매우 빠르게 테이블의 모든 텍스트 컬럼을 검색
+
+```sql
+ALTER TABLE test
+ADD FULLTEXT Col3Idx(col3);
+
+SHOW INDEX FROM test;
+```
+
+### INDEX 삭제 (ALTER)
+
+- ALTER문을 사용하여 테이블에 추가된 인덱스 삭제
+
+```sql
+ALTER TABLE test
+DROP INDEX Col3Idx;
+
+SHOW INDEX from test;
+```
+
+### INDEX 삭제 (DROP INDEX)
+
+- DROP문을 사용하여 해당 테이블에서 명시된 인덱스를 삭제
+- DROP문은 내부적으로 ALTER 문으로 자동 변환되어 명시된 이름의 인덱스를 삭제
+
+```sql
+ALTER TABLE test
+DROP INDEX Col3Idx;
+
+DROP INDEX Col2Idx on test;
+
+SHOW INDEX FROM test;
+```
+
+## VIEW
+
+- 뷰(VIEW)는 데이터베이스에 존재하는 일종의 가상 테이블
+- 실제 테이블처럼 행과 열을 가지고 있지만, 실제로 데이터를 저장하진 않음
+- MySQL에서 뷰는 다른 테이블이나 다른 뷰에 저장되어 있는 데이터를 보여주는 역할만 수행
+- 뷰를 사용하면 여러 테이블이나 뷰를 하나의 테이블처럼 볼 수 있음
+- 뷰의 장점
+    - 특정 사용자에게 테이블 전체가 아닌 필요한 컬럼만 보여줄 수 있음
+    - 복잡한 쿼리를 단순화해서 사용
+    - 쿼리 재사용 가능
+- 뷰의 단점
+    - 한 번 정의된 뷰는 변경할 수 없음
+    - 삽입, 삭제, 갱신 작업에 많은 제한 사항을 가짐
+    - 자신만의 인덱스를 가질 수 없음
+
+### CREATE VIEW
+
+- CREATE VIEW 문을 사용하여 뷰 생성
+
+```sql
+CREATE VIEW testView AS
+SELECT Col1, Col2
+FROM test;
+
+SELECT * FROM testView;
+```
+
+### ALTER VIEW
+
+- ALTER문을 사용하여 뷰를 수정
+
+```sql
+ALTER VIEW testView AS
+SELECT Col1, Col2, Col3
+FROM test;
+
+SELECT * FROM testView;
+```
+
+### DROP VIEW
+
+- DROP문을 사용하여 생성된 뷰를 삭제
+
+```sql
+DROP VIEW testView;
+```
+
+### city, country, countrylanguage 테이블을 JOIN하고, 한국에 대한 정보만 뷰 생성하기
+
+```sql
+create view allview as
+select city.name, country.surfaceArea, city.population, countrylanguage.language
+join country on city.countrycode = countrycode
+join countrylanguage on city.countrycode = countrylanguage.countrycode;
+where city.countrycode = 'kor';
+
+select * from allview;
+```
+
+### INSERT
+
+- 테이블 이름 다음에 나오는 열 생략 가능
+- 생략할 경우에 VALUE 다음에 나오는 값들의 순서 및 개수가 테이블이 정의된 열 순서 및 개수와 동일해야 함
+
+```sql
+INSERT INTO tset
+VALUE(1,123,1.1,"Test");
+
+select *
+from test;
+```
