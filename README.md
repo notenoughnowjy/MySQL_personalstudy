@@ -1,4 +1,4 @@
-# MySQL
+# MySQL.
 
 Youtube Link : https://youtu.be/vgIc4ctNFbc
 
