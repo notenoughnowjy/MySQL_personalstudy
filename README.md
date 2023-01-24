@@ -876,3 +876,83 @@ VALUE(1,123,1.1,"Test");
 select *
 from test;
 ```
+
+
+### INSERT INTO SELECT
+
+- test 테이블에 있는 내용을 test2 테이블에 삽입
+
+```sql
+INSERT INTO test2 select * from test;
+
+select * from test2;
+```
+
+### UPDATE
+
+- 기존에 입력되어 있는 값 변경하는 구문
+- WHERE절 생략 가능하나 테이블의 전체 행의 내용 변경
+
+```sql
+update test
+set col1=1, col2=1.0, col3='test'
+where id = 1;
+
+select * from test;
+```
+
+### DELETE
+
+- 행 단위로 데이터 삭제하는 구문
+- DELETE FROM 테이블이름 WHERE 조건;
+- 데이터는 지워지지만 테이블 용량은 줄어들지 않음
+- 원하는 데이터만 지울 수 있음
+- 삭제 후 잘못 삭제한 것을 되돌릴 수 있음 → 휴지통에 넣었다고 생각하면 편함
+
+※WHERE 조건을 쓰지 않으면 전체가 다 날라간다.
+
+```sql
+DELETE FROM test
+WHERE id = 1;
+
+SELECT * FROM test;
+```
+
+### TRUNCATE
+
+- 용량이 줄어 들고, 인덱스 등도 모두 삭제
+- 테이블은 삭제하지는 않고, 데이터만 삭제
+- 한꺼번에 다 지워야 함
+- 삭제 후 절대 되돌릴 수 없음
+
+```sql
+TRUNCATE TABLE test;
+
+SELECT * FROM test;
+```
+
+### DROP TABLE
+
+- 테이블 전체를 삭제, 공간, 객체를 삭제
+- 삭제 후 절대 되돌릴 수 없음
+
+```sql
+DROP TABLE test
+
+SELECT * FROM test;
+
+-> 아무것도 뜨지 않음
+```
+
+### DROP DATABASE
+
+- DROP DATABASE 문은 해당 데이터베이스를 삭제
+
+```sql
+DROP DATABASE '데이터베이스 명';
+```
+
+### 자신만의 연락처 테이블 만들기
+이름, 전화번호, 주소, 이메일 …
+(참고) 데이터 타입 : 
+https://dev.mysql.com/doc/refman/8.0/en/data-types.html
